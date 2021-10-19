@@ -1,0 +1,44 @@
+{% trans_default_domain('ssi') %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+        <div class="card-body">
+            <form class="form-inline float-right">
+                    <label class="form-label mr-3">{{ 'Number of logs'|trans }}</label>
+                    <select id="nbLogsElements" class="form-control">
+                        <option value="10">10</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                        <option value="200">200</option>
+                    </select>
+                </form>
+            <h3 class="card-title"><i class="fa fa-newspaper"></i> {{ "Latest logs"|trans }}</h3>
+            <div id="logContent">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+
+        updateLog();
+        $('#nbLogsElements').change(updateLog);
+
+
+    });
+
+    function updateLog()
+    {
+         $('#logContent').html('<div class="spinner-border spinner-border-sm" role="status"><span class="sr-only">{{ 'Loading'|trans }}...</span></div> {{ 'Loading logs'|trans }}');
+
+         $.ajax({
+             url: '{{ path('ics_ssi_log_list') }}/'+ $('#nbLogsElements').val()
+         }).done(function(data){
+             $('#logContent').html(data);
+             setTimeout(updateLog,15000);
+         });
+
+    }
+
+</script>

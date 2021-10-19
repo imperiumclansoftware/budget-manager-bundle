@@ -1,0 +1,7 @@
+controllers:
+    resource: ../src/Controller/
+    type: annotation
+
+ssi_bundle:
+    resource: '@SsiBundle/config/routes.yaml'
+    prefix: /ssi

@@ -109,5 +109,5 @@ class AdresseClient
     function setClient($client)
     {
         $this->client = $client;
-}
+    }
 }   //--- Fin de AdresseClient

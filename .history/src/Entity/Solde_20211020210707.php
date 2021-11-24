@@ -22,6 +22,16 @@ class Solde
     private $id;
 
     /**
+     * @ORM\Column(name="positif", type="bigint", length=50, nullable=true, scale=2)
+     */
+    private $positif;
+
+    /**
+     * @ORM\Column(name="negatif", type="bigint", length=50, nullable=true, scale=2)
+     */
+    private $negatif;
+
+    /**
      * @ORM\Column(name="solde", type="bigint", length=50, nullable=true, scale=2)
      */
     private $solde;

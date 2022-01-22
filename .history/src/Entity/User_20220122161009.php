@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
+ * @author Geronimo <geronimo8080@gmail.Com>
  * @ORM\Table(schema="budgetManager")
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */

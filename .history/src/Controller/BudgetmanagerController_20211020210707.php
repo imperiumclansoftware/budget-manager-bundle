@@ -8,7 +8,6 @@ class BudgetmanagerController extends AbstractController
 {
 
     /**
-     * @author Name <email@email.com>
     * @Route("/",name="ics-budgetmanager-homepage")
     */
     public function index()

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @author Geronimo <geronimo8080@gmail.Com>
  * @ORM\Table(schema="budgetManager")
  * @ORM\Entity(repositoryClass="App\Repository\SoldeRepository")
  * @ORM\Entity

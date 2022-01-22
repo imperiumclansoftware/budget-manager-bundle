@@ -13,7 +13,6 @@ use Doctrine\ORM\Mapping as ORM;
 class AgenceBanque
 {
     /**
-     * @author Geronimo <geronimo8080@gmail.Com>
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")

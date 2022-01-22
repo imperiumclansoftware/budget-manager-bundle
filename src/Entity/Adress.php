@@ -6,11 +6,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * @author Geronimo <geronimo8080@gmail.Com>
  * @ORM\Table(schema="budgetManager")
  * @ORM\Entity(repositoryClass="App\Repository\AdresseClientRepository")
  * @ORM\Entity
  */
-class AdresseClient
+class Adress
 {
     /**
      * @ORM\Id
@@ -20,26 +21,31 @@ class AdresseClient
     private $id;
 
     /**
+     * @var int
      * @ORM\Column(name="num_voie", type="string", length=20, nullable=false)
      */
     private $numVoie;
 
     /**
+     * @var string
      * @ORM\Column(name="voie", type="string", length=200, nullable=false)
      */
     private $voie;
 
     /**
-     * @ORM\Column(name="cp", type="integer", length=20, nullable=false, precision=5)
+     * @var int
+     * @ORM\Column(name="cp", type="integer", length=6, nullable=false, precision=5)
      */
     private $cp;
 
     /**
+     * @var text
      * @ORM\Column(name="ville",type="string", length=200, nullable=false)
      */
     private $ville;
 
     /**
+     * @var text
      * @ORM\OneToMany(targetEntity="Client", mappedBy="adresseClient")
      */
     private $client;
@@ -109,5 +115,5 @@ class AdresseClient
     function setClient($client)
     {
         $this->client = $client;
-    }
+}
 }   //--- Fin de AdresseClient

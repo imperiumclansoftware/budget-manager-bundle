@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * @author Geronimo <geronimo8080@gmail.Com>
  * @ORM\Table(schema="budgetManager")
  * @ORM\Entity(repositoryClass="App\Repository\SoldeRepository")
  * @ORM\Entity
@@ -20,16 +21,6 @@ class Solde
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
-
-    /**
-     * @ORM\Column(name="positif", type="bigint", length=50, nullable=true, scale=2)
-     */
-    private $positif;
-
-    /**
-     * @ORM\Column(name="negatif", type="bigint", length=50, nullable=true, scale=2)
-     */
-    private $negatif;
 
     /**
      * @ORM\Column(name="solde", type="bigint", length=50, nullable=true, scale=2)

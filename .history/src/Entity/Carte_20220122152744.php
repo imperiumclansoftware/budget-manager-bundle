@@ -5,16 +5,15 @@ namespace App\Entity\banque;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
 /**
  * @ORM\Table(schema="budgetManager")
- * @ORM\Entity(repositoryClass="App\Repository\SoldeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\CarteRepository")
  * @ORM\Entity
  */
-class Solde
+class Carte
 {
     /**
+     * @author Geronimo <geronimo8080@gmail.Com>
      * @ORM\Id
      * @ORM\Column(name="id", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -22,16 +21,26 @@ class Solde
     private $id;
 
     /**
-     * @ORM\Column(name="solde", type="bigint", length=50, nullable=true, scale=2)
+     * @ORM\Column(name="num_carte", type="bigint", length=200, nullable=true)
      */
-    private $solde;
+    private $numCarte;
 
     /**
-     * @ORM\OneToMany(targetEntity="InfoCompte", mappedBy="solde")
+     * @ORM\Column(name="date_carte", type="date", nullable=true)
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $dateCarte;
+
+    /**
+     * @ORM\OneToMany(targetEntity="InfoCompte", mappedBy="carte")
      */
     private $infoCompte;
 
-
+    //--- Gestion Admin
+    public function __toString()
+    {
+        return $this->numCarte;
+    }
 
     //--- Le Construc ---
     public function __construct()
@@ -46,19 +55,14 @@ class Solde
         return $this->id;
     }
 
-    function getPositif()
+    function getNumCarte()
     {
-        return $this->positif;
+        return $this->numCarte;
     }
 
-    function getNegatif()
+    function getDateCarte()
     {
-        return $this->negatif;
-    }
-
-    function getSolde()
-    {
-        return $this->solde;
+        return $this->dateCarte;
     }
 
     function getInfoCompte()
@@ -71,23 +75,18 @@ class Solde
         $this->id = $id;
     }
 
-    function setPositif($positif)
+    function setNumCarte($numCarte)
     {
-        $this->positif = $positif;
+        $this->numCarte = $numCarte;
     }
 
-    function setNegatif($negatif)
+    function setDateCarte($dateCarte)
     {
-        $this->negatif = $negatif;
-    }
-
-    function setSolde($solde)
-    {
-        $this->solde = $solde;
+        $this->dateCarte = $dateCarte;
     }
 
     function setInfoCompte($infoCompte)
     {
         $this->infoCompte = $infoCompte;
     }
-}   //--- Fin de Solde
+}   //--- Fin de Carte

@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @author Geronimo <geronimo8080@gmail.Com>
  * @ORM\Table(schema="budgetManager")
  * @ORM\Entity(repositoryClass="App\Repository\TestRepository")
  */

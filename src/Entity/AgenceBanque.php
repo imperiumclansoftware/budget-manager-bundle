@@ -26,16 +26,6 @@ class AgenceBanque
     private $agence;
 
     /**
-     * @ORM\Column(name="num_voie", type="string", length=20, nullable=false)
-     */
-    private $numVoie;
-
-    /**
-     * @ORM\Column(name="voie", type="string", length=200, nullable=false)
-     */
-    private $voie;
-
-    /**
      * @ORM\Column(name="cp", type="integer", length=20, nullable=false, precision=5)
      */
     private $cp;
@@ -87,15 +77,6 @@ class AgenceBanque
     {
         return $this->agence;
     }
-    function getNumVoie()
-    {
-        return $this->numVoie;
-    }
-
-    function getVoie()
-    {
-        return $this->voie;
-    }
 
     function getCp()
     {
@@ -130,16 +111,6 @@ class AgenceBanque
         $this->id = $agence;
     }
 
-    function setNumVoie($numVoie)
-    {
-        $this->numVoie = $numVoie;
-    }
-
-    function setVoie($voie)
-    {
-        $this->voie = $voie;
-    }
-
     function setCp($cp)
     {
         $this->cp = $cp;
@@ -162,6 +133,6 @@ class AgenceBanque
     {
         $this->infoCompte = $infoCompte;
     }
-   
+
 
 }	//--- fin de AdresseBanque

@@ -37,6 +37,7 @@ class Solde
     //--- Le Construc ---
     public function __construct()
     {
+        // Pas de MtoM et de OtoM
         $this->infoCompte = new ArrayCollection();
     }
 

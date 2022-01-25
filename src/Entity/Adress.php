@@ -46,7 +46,7 @@ class Adress
 
     /**
      * @var text
-     * @ORM\OneToMany(targetEntity="Client", mappedBy="adresseClient")
+     * @ORM\OneToMany(targetEntity="Client", mappedBy="adress")
      */
     private $client;
 

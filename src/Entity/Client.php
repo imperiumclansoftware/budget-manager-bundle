@@ -54,10 +54,10 @@ class Client
     private $telephone;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AdresseClient", inversedBy="client")
-     * @ORM\JoinColumn(name="adresse_client_id", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="Adress", inversedBy="client")
+     * @ORM\JoinColumn(name="adress_id", referencedColumnName="id", nullable=false)
      */
-    private $adresseClient;
+    private $adress;
 
 
 
@@ -97,11 +97,6 @@ class Client
         return $this->telephone;
     }
 
-    function getAdresseClient()
-    {
-        return $this->adresseClient;
-    }
-
     function setId($id)
     {
         $this->id = $id;
@@ -137,12 +132,6 @@ class Client
         $this->telephone = $telephone;
     }
 
-    function setAdresseClient($adresseClient)
-    {
-        $this->adresseClient = $adresseClient;
-    }
-
-
 
 
 
@@ -155,5 +144,25 @@ class Client
     public function __toString()
     {
         return $this->nom;
+    }
+
+    /**
+     * Get the value of adress
+     */ 
+    public function getAdress()
+    {
+        return $this->adress;
+    }
+
+    /**
+     * Set the value of adress
+     *
+     * @return  self
+     */ 
+    public function setAdress($adress)
+    {
+        $this->adress = $adress;
+
+        return $this;
     }
 }   //--- Fin de Client

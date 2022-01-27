@@ -4,7 +4,6 @@ namespace ICS\BudgetmanagerBundle\Controller\Admin;
 
 use ICS\BudgetmanagerBundle\Entity\banque\Client;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
 class ClientCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string

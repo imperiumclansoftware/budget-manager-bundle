@@ -2,7 +2,7 @@
 
 namespace ICS\BudgetmanagerBundle\Controller\Admin;
 
-use ICS\BudgetmanagerBundle\Entity\banque\InfoCompte;
+use ICS\BudgetmanagerBundle\Entity\InfoCompte;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class InfoCompteCrudController extends AbstractCrudController

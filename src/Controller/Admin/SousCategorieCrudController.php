@@ -2,7 +2,7 @@
 
 namespace ICS\BudgetmanagerBundle\Controller\Admin;
 
-use ICS\BudgetmanagerBundle\Entity\banque\SousCategorie;
+use ICS\BudgetmanagerBundle\Entity\SousCategorie;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SousCategorieCrudController extends AbstractCrudController

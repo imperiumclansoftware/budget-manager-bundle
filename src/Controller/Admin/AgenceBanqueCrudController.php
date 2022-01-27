@@ -2,7 +2,7 @@
 
 namespace ICS\BudgetmanagerBundle\Controller\Admin;
 
-use ICS\BudgetmanagerBundle\Entity\banque\AgenceBanque;
+use ICS\BudgetmanagerBundle\Entity\AgenceBanque;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AgenceBanqueCrudController extends AbstractCrudController

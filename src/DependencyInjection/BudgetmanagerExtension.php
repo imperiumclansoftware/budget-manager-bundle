@@ -28,7 +28,8 @@ class BudgetmanagerExtension extends Extension implements PrependExtensionInterf
 
         // Loading security config
         $loader->load('security.yaml');
-
+        $loader->load('doctrine.yaml');
+        
         // Loading specific bundle config
         //$bundles = $container->getParameter('kernel.bundles');
 

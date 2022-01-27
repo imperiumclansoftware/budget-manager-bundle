@@ -2,7 +2,7 @@
 
 namespace ICS\BudgetmanagerBundle\Controller\Admin;
 
-use ICS\BudgetmanagerBundle\Entity\banque\Solde;
+use ICS\BudgetmanagerBundle\Entity\Solde;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class SoldeCrudController extends AbstractCrudController

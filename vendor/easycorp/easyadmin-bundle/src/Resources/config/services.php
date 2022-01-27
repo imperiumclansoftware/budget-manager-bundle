@@ -39,6 +39,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\EmailConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\FormConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\IdConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\ImageConfigurator;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\IntegerConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\LanguageConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\LocaleConfigurator;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Configurator\MoneyConfigurator;
@@ -223,6 +224,7 @@ return static function (ContainerConfigurator $container) {
             ->arg(1, new Reference('doctrine'))
             ->arg(2, new Reference(EntityFactory::class))
             ->arg(3, new Reference(FormFactory::class))
+            ->arg(4, new Reference('event_dispatcher'))
 
         ->set(EntityFactory::class)
             ->arg(0, new Reference(FieldFactory::class))
@@ -343,6 +345,8 @@ return static function (ContainerConfigurator $container) {
 
         ->set(ImageConfigurator::class)
             ->arg(0, '%kernel.project_dir%')
+
+        ->set(IntegerConfigurator::class)
 
         ->set(LanguageConfigurator::class)
 

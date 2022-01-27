@@ -269,6 +269,12 @@ display the two fields on the same row also in the ``sm`` breakpoint. Besides,
 it reduces the number of columns in larger breakpoints (``lg`` and ``xxl``) to
 improve the rendering of those fields.
 
+.. tip::
+
+    You can also use the CSS classes related to reordering and offseting columns::
+
+        yield DateTimeField::new('endsAt')->setColumns('col-sm-6 col-xxl-3 offset-lg-1 order-3');
+
 Because of how Bootstrap grid works, when you configure field columns manually,
 each row will contain as many fields as possible. If one field takes 4 columns
 and the next one takes 3 columns, the row still has ``12 - 4 - 3 = 5`` columns
@@ -339,6 +345,41 @@ the "panels" created with the special ``FormField`` object::
             FormField::addPanel('Contact information')->renderCollapsed(),
         ];
     }
+
+Form Tabs
+~~~~~~~~~~~
+
+In pages where you display lots of fields, you can divide them in tabs using
+the "tabs" created with the special ``FormField`` object::
+
+    use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
+
+    public function configureFields(string $pageName): iterable
+    {
+        return [
+            IdField::new('id')->hideOnForm(),
+
+            // Add a tab
+            FormField::addTab('First Tab'),
+
+            // You can use a Form Panel inside a Form Tab
+            FormField::addPanel('User Details'),
+
+            // Your fields
+            TextField::new('firstName'),
+            TextField::new('lastName'),
+
+            // Add a second Form Tab
+            // Tabs can also define their icon, CSS class and help message
+            FormField::addTab('Contact information Tab')
+                ->setIcon('phone')->addCssClass('optional')
+                ->setHelp('Phone number is preferred'),
+
+            TextField::new('phone'),
+
+        ];
+    }
+
 
 Field Types
 -----------

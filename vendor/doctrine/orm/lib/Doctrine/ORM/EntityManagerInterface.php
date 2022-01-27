@@ -8,6 +8,7 @@ use BadMethodCallException;
 use DateTimeInterface;
 use Doctrine\Common\EventManager;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\LockMode;
 use Doctrine\ORM\Internal\Hydration\AbstractHydrator;
 use Doctrine\ORM\Proxy\ProxyFactory;
 use Doctrine\ORM\Query\Expr;
@@ -19,6 +20,7 @@ use Doctrine\Persistence\ObjectManager;
  * EntityManager interface
  *
  * @method Mapping\ClassMetadataFactory getMetadataFactory()
+ * @method mixed wrapInTransaction(callable $func)
  */
 interface EntityManagerInterface extends ObjectManager
 {
@@ -236,6 +238,7 @@ interface EntityManagerInterface extends ObjectManager
      * @param object                     $entity
      * @param int                        $lockMode
      * @param int|DateTimeInterface|null $lockVersion
+     * @psalm-param LockMode::* $lockMode
      *
      * @return void
      *
@@ -281,6 +284,7 @@ interface EntityManagerInterface extends ObjectManager
      * @deprecated
      *
      * @param string|int $hydrationMode
+     * @psalm-param string|AbstractQuery::HYDRATE_* $hydrationMode
      *
      * @return AbstractHydrator
      */
@@ -290,6 +294,7 @@ interface EntityManagerInterface extends ObjectManager
      * Create a new instance for the given hydration mode.
      *
      * @param string|int $hydrationMode
+     * @psalm-param string|AbstractQuery::HYDRATE_* $hydrationMode
      *
      * @return AbstractHydrator
      *
@@ -329,11 +334,9 @@ interface EntityManagerInterface extends ObjectManager
      * {@inheritDoc}
      *
      * @psalm-param string|class-string<T> $className
-     * @phpstan-param string $className
      *
      * @return Mapping\ClassMetadata
      * @psalm-return Mapping\ClassMetadata<T>
-     * @phpstan-return Mapping\ClassMetadata<object>
      *
      * @psalm-template T of object
      */

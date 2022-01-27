@@ -189,7 +189,7 @@ final class ActionFactory
             $requestParameters[EA::ENTITY_ID] = $entityDto->getPrimaryKeyValueAsString();
         }
 
-        return $this->adminUrlGenerator->unsetAllExcept(EA::MENU_INDEX, EA::SUBMENU_INDEX, EA::FILTERS)->setAll($requestParameters)->generateUrl();
+        return $this->adminUrlGenerator->unsetAllExcept(EA::MENU_INDEX, EA::SUBMENU_INDEX, EA::FILTERS, EA::PAGE)->setAll($requestParameters)->generateUrl();
     }
 
     private function generateReferrerUrl(Request $request, ActionDto $actionDto, string $currentAction): ?string
@@ -210,8 +210,8 @@ final class ActionFactory
             return null;
         }
 
-        $referrer = $request->get(EA::REFERRER);
-        $referrerParts = parse_url($referrer);
+        $referrer = $request->query->get(EA::REFERRER);
+        $referrerParts = parse_url((string) $referrer);
         parse_str($referrerParts[EA::QUERY] ?? '', $referrerQueryStringVariables);
         $referrerCrudAction = $referrerQueryStringVariables[EA::CRUD_ACTION] ?? null;
 

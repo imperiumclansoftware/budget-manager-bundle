@@ -33,6 +33,7 @@ use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\EveOnlineProviderConfi
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FacebookProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FitbitProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FoursquareProviderConfigurator;
+use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\FusionAuthProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GenericProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GeocachingProviderConfigurator;
 use KnpU\OAuth2ClientBundle\DependencyInjection\Providers\GithubProviderConfigurator;
@@ -115,6 +116,7 @@ class KnpUOAuth2ClientExtension extends Extension
         'facebook' => FacebookProviderConfigurator::class,
         'fitbit' => FitbitProviderConfigurator::class,
         'four_square' => FoursquareProviderConfigurator::class,
+        'fusion_auth' => FusionAuthProviderConfigurator::class,
         'geocaching' => GeocachingProviderConfigurator::class,
         'github' => GithubProviderConfigurator::class,
         'gitlab' => GitlabProviderConfigurator::class,
@@ -163,7 +165,7 @@ class KnpUOAuth2ClientExtension extends Extension
     /**
      * Load the bundle configuration.
      */
-    public function load(array $configs, ContainerBuilder $container)
+    public function load(array $configs, ContainerBuilder $container): void
     {
         $processor = new Processor();
         $configuration = new Configuration();
@@ -244,7 +246,7 @@ class KnpUOAuth2ClientExtension extends Extension
      *
      * @return string The client service id
      */
-    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators)
+    private function configureProviderAndClient(ContainerBuilder $container, $providerType, $providerKey, $providerClass, $clientClass, $packageName, array $options, $redirectRoute, array $redirectParams, $useState, array $collaborators): string
     {
         if ($this->checkExternalClassExistence && !class_exists($providerClass)) {
             if ('generic' === $providerType) {
@@ -304,17 +306,15 @@ class KnpUOAuth2ClientExtension extends Extension
         return $clientServiceKey;
     }
 
-    public static function getAllSupportedTypes()
+    public static function getAllSupportedTypes(): array
     {
         return array_keys(self::$supportedProviderTypes);
     }
 
     /**
      * @param string $type
-     *
-     * @return ProviderConfiguratorInterface
      */
-    public function getConfigurator($type)
+    public function getConfigurator($type): ProviderConfiguratorInterface
     {
         if (!isset($this->configurators[$type])) {
             $class = self::$supportedProviderTypes[$type];
@@ -327,10 +327,8 @@ class KnpUOAuth2ClientExtension extends Extension
 
     /**
      * Overridden so the alias isn't "knp_uo_auth2_client".
-     *
-     * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'knpu_oauth2_client';
     }

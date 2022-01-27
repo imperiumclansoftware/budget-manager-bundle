@@ -78,6 +78,7 @@ via Composer:
 | [Facebook](https://github.com/thephpleague/oauth2-facebook)            | composer require league/oauth2-facebook             |
 | [Fitbit](https://github.com/djchen/oauth2-fitbit)                      | composer require djchen/oauth2-fitbit               |
 | [Foursquare](https://github.com/stevenmaguire/oauth2-foursquare)       | composer require stevenmaguire/oauth2-foursquare    |
+| [FusionAuth](https://github.com/jerryhopper/oauth2-fusionauth)         | composer require jerryhopper/oauth2-fusionauth      |
 | [Geocaching](https://github.com/surfoo/oauth2-geocaching)              | composer require surfoo/oauth2-geocaching           |
 | [GitHub](https://github.com/thephpleague/oauth2-github)                | composer require league/oauth2-github               |
 | [GitLab](https://github.com/omines/oauth2-gitlab)                      | composer require omines/oauth2-gitlab               |
@@ -448,7 +449,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authenticator\Passport\PassportInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
 
 class MyFacebookAuthenticator extends OAuth2Authenticator
@@ -470,32 +472,33 @@ class MyFacebookAuthenticator extends OAuth2Authenticator
         return $request->attributes->get('_route') === 'connect_facebook_check';
     }
 
-    public function authenticate(Request $request): PassportInterface
+    public function authenticate(Request $request): Passport
     {
-        $credentials = $this->fetchAccessToken($this->clientRegistry->getClient('facebook_main'));
+        $client = $this->clientRegistry->getClient('facebook_main');
+        $accessToken = $this->fetchAccessToken($client);
 
         return new SelfValidatingPassport(
-            new UserBadge($credentials, function($credentials) {
+            new UserBadge($accessToken->getToken(), function() use ($accessToken, $client) {
                 /** @var FacebookUser $facebookUser */
-                $facebookUser = $this->clientRegistry->getClient('facebook_main')->fetchUserFromToken($credentials);
+                $facebookUser = $client->fetchUserFromToken($accessToken);
 
                 $email = $facebookUser->getEmail();
 
                 // 1) have they logged in with Facebook before? Easy!
-                $existingUser = $this->em->getRepository(User::class)->findOneBy(['facebookId' => $facebookUser->getId()]);
+                $existingUser = $this->entityManager->getRepository(User::class)->findOneBy(['facebookId' => $facebookUser->getId()]);
 
                 if ($existingUser) {
                     return $existingUser;
                 }
 
                 // 2) do we have a matching user by email?
-                $user = $this->em->getRepository(User::class)->findOneBy(['email' => $email]);
+                $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
                 // 3) Maybe you just want to "register" them by creating
                 // a User object
                 $user->setFacebookId($facebookUser->getId());
-                $this->em->persist($user);
-                $this->em->flush();
+                $this->entityManager->persist($user);
+                $this->entityManager->flush();
 
                 return $user;
             })
@@ -561,7 +564,7 @@ You have a couple of options to store access tokens for use at a later time:
     }
     ```
 
-2. Store the refresh token string (eg. in the dabatase `user.refresh_token`), this means you must always refresh. 
+2. Store the refresh token string (eg. in the database `user.refresh_token`), this means you must always refresh. 
     You can also store the access token and expiration and then avoid the refresh until the access token is actually expired.
     ```php
     // Fetch the AccessToken and store the refresh token
@@ -990,6 +993,23 @@ knpu_oauth2_client:
             # a route name you'll create
             redirect_route: connect_four_square_check
             redirect_params: {}
+            # whether to check OAuth2 "state": defaults to true
+            # use_state: true
+
+        # will create service: "knpu.oauth2.client.fusion_auth"
+        # an instance of: KnpU\OAuth2ClientBundle\Client\Provider\FusionAuthClient
+        # composer require jerryhopper/oauth2-fusionauth
+        fusion_auth:
+            # must be "fusion_auth" - it activates that type!
+            type: fusion_auth
+            # add and set these environment variables in your .env files
+            client_id: '%env(OAUTH_FUSION_AUTH_CLIENT_ID)%'
+            client_secret: '%env(OAUTH_FUSION_AUTH_CLIENT_SECRET)%'
+            # a route name you'll create
+            redirect_route: connect_fusion_auth_check
+            redirect_params: {}
+            # FusionAuth Server URL, no trailing slash
+            auth_server_url: null
             # whether to check OAuth2 "state": defaults to true
             # use_state: true
 
@@ -1526,7 +1546,7 @@ that you can use: See [Provider Client Libraries](http://oauth2-client.thephplea
 
 If you found one there, awesome! Install it. If not, you'll need
 to create your own Provider class. See the
-[Provider Guide](https://github.com/thephpleague/oauth2-client/blob/master/README.PROVIDER-GUIDE.md)
+[Provider Guide](https://oauth2-client.thephpleague.com/providers/implementing/)
 about this.
 
 Either way, after this step, you *should* have a provider "class"

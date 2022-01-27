@@ -185,7 +185,7 @@ Date, Time and Number Formatting Options
         return $crud
             // the argument must be either one of these strings: 'short', 'medium', 'long', 'full', 'none'
             // (the strings are also available as \EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField::FORMAT_* constants)
-            // or a valid ICU Datetime Pattern (see http://userguide.icu-project.org/formatparse/datetime)
+            // or a valid ICU Datetime Pattern (see https://unicode-org.github.io/icu/userguide/format_parse/datetime/)
             ->setDateFormat('...')
             ->setTimeFormat('...')
 
@@ -195,13 +195,18 @@ Date, Time and Number Formatting Options
             ->setDateIntervalFormat('%%y Year(s) %%m Month(s) %%d Day(s)')
             ->setTimezone('...')
 
-            // used to format numbers before rendering them on templates
+            // this option makes numeric values to be rendered with a sprintf()
+            // call using this value as the first argument.
+            // this option overrides any formatting option for all numeric values
+            // (e.g. setNumDecimals(), setRoundingMode(), etc. are ignored)
+            // NumberField and IntegerField can override this value with their
+            // own setNumberFormat() methods, which works in the same way
             ->setNumberFormat('%.2d');
         ;
     }
 
-Search and Pagination Options
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Search, Order, and Pagination Options
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ::
 
@@ -220,6 +225,8 @@ Search and Pagination Options
             // (user can later change this sorting by clicking on the table columns)
             ->setDefaultSort(['id' => 'DESC'])
             ->setDefaultSort(['id' => 'DESC', 'title' => 'ASC', 'startsAt' => 'DESC'])
+            // you can sort by Doctrine associations up to two levels
+            ->setDefaultSort(['seller.name' => 'ASC'])
 
             // the max number of entities to display per page
             ->setPaginatorPageSize(30)

@@ -65,7 +65,19 @@ final class CacheCompatibilityPass implements CompilerPassInterface
                     continue;
                 }
 
-                $driverId = (string) $container->getDefinition($factoryMethodCall[1][0])->getArgument(1);
+                $regionDefinition = $container->getDefinition($factoryMethodCall[1][0]);
+
+                // Get inner service for FileLock
+                if ($regionDefinition->getClass() === '%doctrine.orm.second_level_cache.filelock_region.class%') {
+                    $regionDefinition = $container->getDefinition($regionDefinition->getArgument(0));
+                }
+
+                // We don't know how to adjust custom region classes
+                if ($regionDefinition->getClass() !== '%doctrine.orm.second_level_cache.default_region.class%') {
+                    continue;
+                }
+
+                $driverId = (string) $regionDefinition->getArgument(1);
                 if (! $container->hasAlias($driverId)) {
                     continue;
                 }

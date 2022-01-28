@@ -1,6 +1,7 @@
 <?php
 
 namespace ICS\BudgetmanagerBundle\Entity;
+// namespace App\Entity;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
